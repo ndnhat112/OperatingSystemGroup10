@@ -60,6 +60,7 @@ int main()
         shared_memory->ready = 0;
 
         shmdt(shared_memory);
+        exit(1);
     }
 
     // detach to shared memory
