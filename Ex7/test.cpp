@@ -16,22 +16,6 @@ struct SystemInfo {
 	AllocationArray Max, Allocation;
 };
 
-
-// returns true if the system is in safe state
-bool isSystemSafe(const SystemInfo& s) {
-	// TODO: deadlock avoidance
-	return false;
-	// END TODO
-}
-
-// returns true if it is safe to allow process Ti to make the request
-bool isRequestSafe(const SystemInfo& s, int Ti, ResourceArray Request) {
-	// TODO: deadlock avoidance
-	return false;
-	// END TODO
-}
-
-
 // returns -1 if the system is deadlock free, or the LOWEST index of the processes in deadlock
 bool check(const ResourceArray& Work, int Request_i[], int m) 
 {
@@ -103,57 +87,6 @@ void assignAllocationArray(AllocationArray a, initializer_list<initializer_list<
 	for (auto li : l)
 		assignArray(a[i++], li);
 }
-
-
-void deadlockAvoidance(int argc, const char** argv) {
-	SystemInfo s;
-	ResourceArray Requests[3];
-	int RequestTi[3];
-
-	if (argc <= 1 || strcmp(argv[1], "-i") != 0) {
-		s.n = 5;
-		s.m = 3;
-		assignArray(s.Available, {3, 3, 2});
-		assignAllocationArray(s.Max, {
-			{7, 5, 3},
-			{3, 2, 2},
-			{9, 0, 2},
-			{2, 2, 2},
-			{4, 3, 3}});
-		assignAllocationArray(s.Allocation, {
-			{0, 1, 0},
-			{2, 0, 0},
-			{3, 0, 2},
-			{2, 1, 1},
-			{0, 0, 2}});
-		
-		assignArray(RequestTi, {1, 4, 0});
-		assignArray(Requests[0], {1, 0, 2});
-		assignArray(Requests[1], {3, 3, 0});
-		assignArray(Requests[2], {0, 2, 0});
-
-	} else {
-		cin >> s.n >> s.m;
-
-		int i, j;
-		for (i = 0; i < s.n; i++)
-			cin >> s.Available[i];
-
-		for (i = 0; i < s.n; i++)
-			for (j = 0; j < s.m; j++)
-				cin >> s.Max[i][j];
-
-		for (i = 0; i < s.n; i++)
-			for (j = 0; j < s.m; j++)
-				cin >> s.Allocation[i][j];
-	}
-
-	cout << "System safety: " << isSystemSafe(s) << endl;
-
-	for (int i = 0; i < 3; i++)
-		cout << "Request safety: " << isRequestSafe(s, RequestTi[i], Requests[i]) << endl;
-}
-
 
 void deadlockDetection(int argc, const char** argv) {
 	SystemInfo s;
